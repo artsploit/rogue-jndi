@@ -37,6 +37,9 @@ public class Config {
                     "(this file should be located on the remote server)", order = 5)
     public static String localjar = "../../../../../tmp/jar_cache7808167489549525095.tmp";
 
+    @Parameter(names = {"--h2"}, description = "[H2 database init script file", order = 6)
+    public static String h2 = "/h2";
+
     @Parameter(names = {"-h", "--help"}, help = true, description = "Show this help")
     private static boolean help = false;
 
